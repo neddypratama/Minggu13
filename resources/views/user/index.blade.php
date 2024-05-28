@@ -30,6 +30,8 @@
         <table class="table table-bordered table-striped table-hover table-sm" id="table_user"> 
           <thead> 
             <tr><th>ID</th><th>Foto</th><th>Username</th><th>Nama</th><th>Level Pengguna</th><th>Aksi</th></tr> 
+
+            {{-- <tr><th>ID</th><th>Foto</th><th>Username</th><th>Nama</th><th>Level Pengguna</th></tr>  --}}
           </thead> 
       </table> 
     </div> 
@@ -66,12 +68,12 @@
             {
                 extend: 'excel', 
                 title: 'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
+                // exportOptions : columns: [0,1,2,3]
             },
             {
                 extend:'print',
                 title: 'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
+                // exportOptions : columns: [0,1,2,3]
             },
         ],
           ajax: { 
@@ -111,7 +113,8 @@
               className: "", 
               orderable: false,    // orderable: true, jika ingin kolom ini bisa diurutkan 
               searchable: false    // searchable: true, jika ingin kolom ini bisa dicari
-            },{ 
+            },
+            { 
               data: "aksi",                
               className: "", 
               orderable: false,    // orderable: true, jika ingin kolom ini bisa diurutkan 

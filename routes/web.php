@@ -102,4 +102,5 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Route middleware dengan semua level bisa masuk beranda dan hanya yg sudah diaktifikasi saja
 Route::group(['middleware' => ['ceklevel:1,2,3', 'cekactivate:1']], function() {
     Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
+    Route::post('/forecast/update', [BerandaController::class, 'update'])->name('forecast.update');
 });

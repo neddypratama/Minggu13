@@ -22,6 +22,7 @@ class PeramalanChart
         // Ambil data penjualan dari database
         $transaksi = TransaksiDetailModel::with('penjualan')->get();
         $salesData = $transaksi->pluck('jumlah', 'penjualan.penjualan_tanggal')->toArray();
+        // $salesData = $transaksi->pluck('penjualan.penjualan_tanggal')->toArray();
 
         // Lakukan peramalan dengan metode rata-rata bergerak sederhana
         $forecast = Peramalan::simpleMovingAverage($salesData, 7);

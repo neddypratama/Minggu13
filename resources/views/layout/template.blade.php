@@ -50,7 +50,7 @@
     <!-- Main content -->
     <section class="content">
       @yield('content')
-      $@stack('scripts')
+      @stack('scripts')
     </section>
     <!-- /.content -->
   </div>

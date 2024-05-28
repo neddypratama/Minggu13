@@ -20,7 +20,7 @@
                 </tr> 
                 <tr> 
                     <th>Foto</th> 
-                    <td><img src="{{ $user->foto }}" width="100" height="100"></td> 
+                    <td><img src="/storage/{{ $user->foto }}" width="100" height="100"></td> 
                 </tr> 
                 <tr> 
                     <th>Level</th> 
