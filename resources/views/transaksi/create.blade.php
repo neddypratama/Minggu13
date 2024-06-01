@@ -9,20 +9,15 @@
     <div class="card-body">
       <form method="POST" action="{{ url('transaksi') }}" class="form-horizontal">
         @csrf
-        <div class="form-group row">
-          <label class="col-1 control-label col-form-label">User</label>
-          <div class="col-11">
-            <select class="form-control" id="user_id" name="user_id" required>
-              <option value="">- Pilih user -</option>
-              @foreach($user as $item)
-                <option value="{{ $item->user_id }}">{{ $item->nama }}</option>
-              @endforeach
-            </select>
-            @error('level_id')
-              <small class="form-text text-danger">{{ $message }}</small>
-            @enderror
-          </div>
-        </div>
+        <div class="form-group row"> 
+          <label class="col-1 control-label col-form-label">User</label> 
+          <div class="col-11"> 
+            <input type="text" class="form-control" id="user_id" name="user_id" value="{{auth()->user()->nama}}" readonly> 
+            @error('user_id') 
+              <small class="form-text text-danger">{{ $message }}</small> 
+            @enderror 
+          </div> 
+        </div> 
         <div class="form-group row">
           <label class="col-1 control-label col-form-label">Nama Pembeli</label>
           <div class="col-11">
@@ -35,7 +30,7 @@
         <div class="form-group row">
           <label class="col-1 control-label col-form-label">Kode Penjualan</label>
           <div class="col-11">
-            <input type="text" class="form-control" id="penjualan_kode" name="penjualan_kode" value="{{ old('penjualan_kode') }}" required>
+            <input type="text" class="form-control" id="penjualan_kode" name="penjualan_kode" value="{{ old('penjualan_kode') }}" required readonly>
             @error('penjualan_kode')
               <small class="form-text text-danger">{{ $message }}</small>
             @enderror
@@ -88,7 +83,7 @@
                 </div>
                 <div class="col-md-2">
                   <label for="jumlah">Jumlah</label>
-                  <input type="number" name="jumlah[]" class="form-control jumlah" required>
+                  <input type="number" name="jumlah[]" class="form-control jumlah" required step="1" min="0" >
                   @error('jumlah[]')
                     <small class="form-text text-danger">{{ $message }}</small>
                   @enderror
@@ -126,6 +121,10 @@
 
 @push('js')
 <script>
+  const lastPenjualanId = {{ $lastId }};
+  const penjualanKodeInput = document.getElementById('penjualan_kode');
+  penjualanKodeInput.value = 'PJLN_' + (lastPenjualanId+1)
+
   $(document).ready(function() {
       // Function to populate barang select options
       function populateBarangOptions() {

@@ -18,6 +18,6 @@ class CekLevel
         if (in_array($request->user()->level_id,$levelId)) {
             return $next($request);
         }
-        return redirect('/');;
+        return redirect('/beranda');;
     }
 }

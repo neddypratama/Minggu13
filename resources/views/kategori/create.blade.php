@@ -13,7 +13,7 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">Kode Kategori</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="kategori_kode" name="kategori_kode" value="{{ old('kategori_kode') }}" required> 
+            <input type="text" class="form-control" id="kategori_kode" name="kategori_kode" value="{{ old('kategori_kode') }}" placeholder="KKK" required> 
             @error('kategori_kode') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -22,7 +22,7 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">Nama Kategori</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="kategori_nama" name="kategori_nama" value="{{ old('kategori_nama') }}" required> 
+            <input type="text" class="form-control" id="kategori_nama" name="kategori_nama" value="{{ old('kategori_nama') }}" placeholder="Kategori" required> 
             @error('kategori_nama') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 

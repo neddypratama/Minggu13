@@ -26,13 +26,8 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">User</label> 
           <div class="col-11"> 
-            <select class="form-control" id="user_id" name="user_id" required> 
-              <option value="">- Pilih User -</option> 
-              @foreach($user as $item) 
-                <option value="{{ $item->user_id }}">{{ $item->nama }}</option> 
-              @endforeach 
-            </select> 
-            @error('barang_id') 
+            <input type="text" class="form-control" id="user_id" name="user_id" value="{{auth()->user()->nama}}" readonly> 
+            @error('user_id') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
           </div> 
@@ -40,7 +35,7 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Tanggal Stok</label> 
           <div class="col-11"> 
-            <input type="datetime-local" class="form-control" id="stok_tanggal" name="stok_tanggal" value="{{ old('stok_tanggal') }}" required> 
+            <input type="date" class="form-control" id="stok_tanggal" name="stok_tanggal" value="{{ old('stok_tanggal') }}" required> 
             @error('stok_tanggal') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -49,7 +44,7 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Jumlah Stok</label> 
           <div class="col-11"> 
-            <input type="text" class="form-control" id="stok_jumlah" name="stok_jumlah" value="{{ old('stok_jumlah') }}" required> 
+            <input type="number" class="form-control" id="stok_jumlah" name="stok_jumlah" value="{{ old('stok_jumlah') }}" min="0" step="1" placeholder="1" required> 
             @error('stok_jumlah') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 

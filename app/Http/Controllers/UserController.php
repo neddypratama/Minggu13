@@ -61,8 +61,13 @@ class UserController extends Controller
             if ($user->activate == 0) {
                 $btn .= '<form class="d-inline-block ml-1" method="POST" action="'. url('/user/activ/'.$user->user_id).'">' 
                     . csrf_field() . method_field('PUT') .  
-                    '<button type="submit" class="btn btn-primary btn-sm" 
+                    '<button type="submit" class="btn btn-success btn-sm" 
                     onclick="return confirm(\'Apakah Anda yakin mengaktifkan user ini?\');">Active</button></form>';
+            } else {
+                $btn .= '<form class="d-inline-block ml-1" method="POST" action="'. url('/user/nonactiv/'.$user->user_id).'">' 
+                    . csrf_field() . method_field('PUT') .  
+                    '<button type="submit" class="btn btn-primary btn-sm" 
+                    onclick="return confirm(\'Apakah Anda yakin mengnonaktifkan user ini?\');">Non Active</button></form>';
             }
 
             return $btn; 
@@ -100,7 +105,7 @@ class UserController extends Controller
             'nama' => 'required|string|max:100',
             'password' => 'required|min:5',
             'level_id' => 'required|integer',
-            'foto' => 'nullable|image',
+            'foto' => 'nullable|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $fileName = time().$request->file('foto')->getClientOriginalName();
@@ -166,11 +171,11 @@ class UserController extends Controller
 
     public function update(Request $request, string $id){
         $request->validate([
-            'username' => 'required|string|min:3|unique:m_user,username,' .$id. ',user_id',
+            'username' => 'required|string|min:5|unique:m_user,username,' .$id. ',user_id',
             'nama' => 'required|string|max:100',
             'password' => 'nullable|min:5',
             'level_id' => 'required|integer',
-            'foto' => 'nullable|image',
+            'foto' => 'nullable|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if (!empty($request->foto)) {
@@ -220,170 +225,24 @@ public function activate(string $id){
         $user = UserModel::find($id)->update([
             'activate' => 1,
         ]);
-        return redirect('/user')->with('success', 'Data user berhasil dihapus');
+        return redirect('/user')->with('success', 'Data user berhasil diaktifkan');
     }catch(\Illuminate\Database\QueryException $e){
-
-    return redirect('/user')->with('error', 'Data user gagal dihapus karena terdapat tabel lain yang terkait dengan data ini');
+        return redirect('/user')->with('error', 'Data user gagal diaktifkan karena terdapat tabel lain yang terkait dengan data ini');
+    }
 }
-    /*public function index(){
-        $user = UserModel::with('level')->get();
-        return view('user', ['data' => $user]);
-    }
-    public function index(){
-        $user = UserModel::all();
-        return view('user.index', ['data' => $user]);
-    }
 
-    public function create(): View
-    {
-        return view('level.create_user');
+public function nonactivate(string $id){
+    $check = UserModel::find($id);
+    if(!$check){
+        return redirect('/user')->with('error', 'Data user tidak ditemukan');
     }
-
-    public function store(Request $request) : RedirectResponse {
-        $validate = $request->validate([
-            'username' => 'required',
-            'namaLevel' => 'required',
+    try{
+        $user = UserModel::find($id)->update([
+            'activate' => 0,
         ]);
-
-        $request->validate([
-            'title'=> 'bail|required|unique:posts|max:255',
-            'body'=> 'required',
-        ]);
-
-        /*$validateData = $request->validate([
-            'title' => ['required', 'unique:posts', 'max:255'],
-            'body' => ['required'],
-        ]);*/
-
-        /*$validateData = $request->validateWithBag('post', [
-            'title' => ['required', 'unique:posts', 'max:255'],
-            'body' => ['required'],
-        ]);
-
-        UserModel::create([
-            'level_kode' => $request->kodeLevel,
-            'level_nama' => $request->namaLevel,
-        ]);
-        return redirect('/user');
+        return redirect('/user')->with('success', 'Data user berhasil dinonaktifkan');
+    }catch(\Illuminate\Database\QueryException $e){
+        return redirect('/user')->with('error', 'Data user gagal dinonaktifkan karena terdapat tabel lain yang terkait dengan data ini');
     }
-    
-    /*public function create(){
-        return view('level.create_level');
-    }
-
-    public function store(Request $request){
-        LevelModel::create([
-            'level_kode' => $request->kodeLevel,
-            'level_nama' => $request->namaLevel,
-        ]);
-        return redirect('/level');
-    }*/
-
-    /*public function store(Request $request){
-        UserModel::create([
-            'username' => $request->username,
-            'level_nama' => $request->namaLevel,
-        ]);
-        return redirect('/user');
-    }*/
-
-    /*public function tambah(){
-        return view('user_tambah');
-    }
-
-    public function tambah_simpan(Request $request){
-        UserModel::create([
-            'username' => $request->username,
-            'nama' => $request->nama,
-            'password' => Hash::make('$request->password'),
-            'level_id' => $request->level_id
-        ]);
-
-        return redirect('/user');
-    }
-
-    public function ubah($id){
-        $user=UserModel::find($id);
-        return view('user_ubah', ['data' => $user]);
-    }
-
-    public function ubah_simpan($id, Request $request){
-        $user = UserModel::find($id);
-
-        $user->username = $request->username;
-        $user->nama = $request->nama;
-        $user->password = Hash::make('$request -> password');
-        $user->level_id = $request->level_id;
-
-        $user->save();
-
-        return redirect('/user');
-    }
-
-    public function hapus($id){
-        $user = UserModel::find($id);
-        $user->delete();
-
-        return redirect('/user');
-    }
-
-    /*public function index(){
-        $user = UserModel::create([
-            'username' => 'manager11',
-            'nama' => 'Manager11',
-            'password' => Hash::make('12345'),
-            'level_id' => 2,
-        ]);
-
-        $user -> username = 'manager12';
-
-        $user -> save();
-
-        $user->wasChanged(); // true
-        $user->wasChanged('username'); // true
-        $user->wasChanged(['username', 'level_id']); // true
-        $user->wasChanged('nama'); // false
-        dd($user->wasChanged(['nama', 'username'])); // true
-    }*/
-    /*public function index(){
-        $user = UserModel::create(
-            [
-                'username' => 'manager55',
-                'nama' => 'Manager55',
-                'password' => Hash::make('12345'),
-                'level_id' => 2,
-            ]);
-
-            $user -> username = 'manager56';
-
-            $user->isDirty(); //true
-            $user->isDirty('username'); //true
-            $user->isDirty('nama'); //false
-            $user->isDirty(['nama', 'username']); //true
-
-            $user -> isClean(); //false
-            $user -> isClean('username'); //false
-            $user -> isClean('nama'); //true
-            $user -> isClean(['nama', 'username']);//false
-
-            $user -> save();
-
-            $user->isDirty(); //false
-            $user -> isClean(); //true
-            dd($user->isDirty());
-    }*/
-    /*public function index(){
-        $user = UserModel::firstOrNew(
-            [
-                'username' => 'manager33',
-                'nama' => 'Manager Tiga Tiga',
-                'password' => Hash::make('12345'),
-                'level_id' => 2
-            ],
-        );
-        $user->save();
-        return view('user', ['data' => $user]);
-        
-    }*/
 }
 }

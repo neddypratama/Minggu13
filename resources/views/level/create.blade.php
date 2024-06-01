@@ -13,7 +13,7 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Kode Level</label> 
           <div class="col-11"> 
-            <input type="text" class="form-control" id="level_kode" name="level_kode" value="{{ old('level_kode') }}" required> 
+            <input type="text" class="form-control" id="level_kode" name="level_kode" value="{{ old('level_kode') }}" placeholder="AAA" required> 
             @error('level_kode') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -22,7 +22,7 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Nama Level</label> 
           <div class="col-11"> 
-            <input type="text" class="form-control" id="level_nama" name="level_nama" value="{{ old('level_nama') }}" required> 
+            <input type="text" class="form-control" id="level_nama" name="level_nama" value="{{ old('level_nama') }}" placeholder="Anggota" required> 
             @error('level_nama') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 

@@ -31,10 +31,14 @@ class PeramalanChart
         $dates = array_keys($forecast);
         $values = array_values($forecast);
 
+        $formattedValues = array_map(function($value) {
+            return number_format($value, 2, '.', '');
+        }, $values);
+
         return $this->chart->lineChart()
             ->setTitle('Peramalan Penjualan')
             ->setSubtitle('Prediksi berdasarkan data historis')
-            ->addData('Penjualan', $values)
+            ->addData('Penjualan', $formattedValues)
             ->setXAxis($dates)
             ->setColors(['#FF5733'])
             ->setMarkers(['#FF5733'], 7, 10);

@@ -28,6 +28,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['ceklevel:1']], function() {
     Route::put('/{id}', [UserController::class, 'update']);
     Route::delete('/{id}', [UserController::class, 'destroy']);
     Route::put('/activ/{id}', [UserController::class, 'activate']);
+    Route::put('/nonactiv/{id}', [UserController::class, 'nonactivate']);
 });
 
 // Route level untuk level admin
@@ -100,7 +101,7 @@ Route::post('/login', [AuthController::class, 'login_proses']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route middleware dengan semua level bisa masuk beranda dan hanya yg sudah diaktifikasi saja
-Route::group(['middleware' => ['ceklevel:1,2,3', 'cekactivate:1']], function() {
+Route::group(['middleware' => ['cekactivate:1']], function() {
     Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
     Route::post('/forecast/update', [BerandaController::class, 'update'])->name('forecast.update');
 });

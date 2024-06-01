@@ -23,10 +23,16 @@
             @enderror 
           </div> 
         </div> 
+        <div class="input-group mb-3">
+          
+      </div>
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Foto</label> 
           <div class="col-11"> 
-            <input type="file" class="form-control" id="foto" name="foto" value="{{ old('foto') }}" required> 
+            <div class="input-file-wrapper rounded">
+              <div class="input-file-placeholder" id="file-placeholder">- Pilih Foto -</div>
+              <input type="file" class="form-control" name="foto" id="image" value="{{ old('foto') }}">
+            </div> 
             @error('foto') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -35,7 +41,7 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Username</label> 
           <div class="col-11"> 
-            <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" required> 
+            <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" placeholder="heri1" required> 
             @error('username') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -44,7 +50,7 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Nama</label> 
           <div class="col-11"> 
-            <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" required> 
+            <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Heri Sasongko" required> 
             @error('nama') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -53,7 +59,7 @@
         <div class="form-group row"> 
           <label class="col-1 control-label col-form-label">Password</label> 
           <div class="col-11"> 
-            <input type="password" class="form-control" id="password" name="password" required> 
+            <input type="password" class="form-control" id="password" name="password" placeholder="*****" required> 
             @error('password') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -70,7 +76,40 @@
     </div> 
   </div> 
 @endsection 
-@push('css') 
+@push('css')
+<style>
+  /* CSS untuk menyembunyikan input file asli dan menggantinya dengan elemen placeholder */
+  .input-file-wrapper {
+      position: relative;
+      width: 100%;
+  }
+
+  .input-file-wrapper input[type="file"] {
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+  }
+
+  .input-file-placeholder {
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: inline-block;
+      width: 100%;
+      cursor: pointer;
+      background-color: white;
+      border-radius: 5px;
+  }
+</style> 
 @endpush 
 @push('js') 
+<script>
+  document.getElementById('image').addEventListener('change', function() {
+      var fileName = this.files[0].name;
+      document.getElementById('file-placeholder').textContent = fileName;
+  });
+</script>
 @endpush 

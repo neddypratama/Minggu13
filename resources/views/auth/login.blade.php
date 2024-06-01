@@ -19,7 +19,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <h1><b>Admin</b>LTE</h1>
+      <h1>TOKO <b>BAROKAH</b></h1>
     </div>
     <div class="card-body">
       @if (Session::has('error'))
@@ -32,11 +32,11 @@
           {{ Session::get('activate') }}
         </div>
       @endif
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Login untuk memulai aktifitasmu</p>
       <form action="{{ route('login') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Username" name="username">
+          <input type="text" class="form-control" placeholder="herisasongko" name="username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <input type="password" class="form-control" placeholder="*****" name="password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -53,13 +53,13 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-success btn-block">Sign In</button>
+            <button type="submit" class="btn btn-success btn-block">Login</button>
           </div>
           <!-- /.col -->
           <div class="social-auth-links text-center col-12">
             <p>- OR -</p>
             <a href="{{ route('register')}}" class="btn btn-block btn-primary">
-                Sign Up
+                Registrasi
             </a>
         </div>
           <!-- /.col -->

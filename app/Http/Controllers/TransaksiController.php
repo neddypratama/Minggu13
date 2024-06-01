@@ -69,11 +69,15 @@ class TransaksiController extends Controller
         $barang = BarangModel::all();
         $activeMenu = 'Transaksi'; //set menu sedang aktif
 
+        $lastPenjualan = TransaksiModel::latest('penjualan_id')->first();
+        $lastId = $lastPenjualan ? $lastPenjualan->penjualan_id : 0;
+
         return view('Transaksi.create', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'user' => $user,
             'barangs' => $barang,
+            'lastId' => $lastId,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -92,7 +96,7 @@ class TransaksiController extends Controller
         ]);
 
         $transaksi = TransaksiModel::create([
-            'user_id' => $request -> user_id,
+            'user_id' => auth()->user()->user_id,
             'penjualan_kode'=> $request -> penjualan_kode,
             'pembeli'=> $request -> pembeli,
             'penjualan_tanggal' => $request -> penjualan_tanggal,
@@ -108,7 +112,7 @@ class TransaksiController extends Controller
 
             StokModel::create([
                 'barang_id' => $barang_id,
-                'user_id' => $request -> user_id,
+                'user_id' => auth()->user()->user_id,
                 'stok_tanggal' => $request -> penjualan_tanggal,
                 'stok_jumlah' => -$request->jumlah[$index],
             ]);

@@ -13,11 +13,38 @@
   <link rel="stylesheet" href="{{ asset('templete/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('templete/dist/css/adminlte.min.css') }}">
+  <style>
+    /* CSS untuk menyembunyikan input file asli dan menggantinya dengan elemen placeholder */
+    .input-file-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .input-file-wrapper input[type="file"] {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .input-file-placeholder {
+        border: 1px solid #ccc;
+        padding: 10px;
+        display: inline-block;
+        width: 100%;
+        cursor: pointer;
+        background-color: white;
+        border-radius: 5px;
+    }
+  </style>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <b>Admin</b>LTE
+    TOKO <b>BAROKAH</b>
   </div>
   <div class="card">
         <div class="card-body register-card-body">
@@ -26,22 +53,23 @@
                     {{ Session::get('success') }}
                 </div>
             @endif
-            @if (Session::has('sama'))
-                <div class="alert alert-danger" role="alert">
-                    {{ Session::get('sama') }}
-                </div>
-            @endif
-            <p class="login-box-msg">Register a new membership</p>
+            <p class="login-box-msg">Registrasi untuk member baru</p>
             <form action="{{ route('register')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" placeholder="Foto" name="foto">
+                    <div class="input-file-wrapper rounded">
+                        <div class="input-file-placeholder" id="file-placeholder">Pilih foto...</div>
+                        <input type="file" class="form-control" name="foto" id="image" >
+                    </div>
                 </div>
+                {{-- <div class="input-group mb-3">
+                    <input type="file" class="form-control" placeholder="File format gambar" name="foto">
+                </div> --}}
                 @error('foto')
                     <small class="form-text text-danger">{{ $message }}</small> 
                 @enderror 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Full name" name="nama">
+                    <input type="text" class="form-control" placeholder="Heri Sasongko" name="nama">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -52,7 +80,7 @@
                     <small class="form-text text-danger">{{ $message }}</small> 
                 @enderror
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Username" name="username">
+                    <input type="text" class="form-control" placeholder="herisasongko" name="username">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -63,7 +91,7 @@
                     <small class="form-text text-danger">{{ $message }}</small> 
                 @enderror
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" name="password">
+                    <input type="password" class="form-control" placeholder="*****" name="password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -73,17 +101,6 @@
                 @error('password')
                     <small class="form-text text-danger">{{ $message }}</small> 
                 @enderror
-                <div class="input-group mb-3">
-                    <input type="number" class="form-control" placeholder="Level Id" name="level_id">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-layer-group"></span>
-                        </div>
-                    </div>
-                </div>
-                @error('level_id')
-                    <small class="form-text text-danger">{{ $message }}</small> 
-                @enderror 
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
@@ -106,5 +123,12 @@
 <script src="{{ asset('templete/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('templete/dist/js/adminlte.min.js') }}"></script>
+<script>
+    document.getElementById('image').addEventListener('change', function() {
+        var fileName = this.files[0].name;
+        document.getElementById('file-placeholder').textContent = fileName;
+    });
+</script>
+
 </body>
 </html>

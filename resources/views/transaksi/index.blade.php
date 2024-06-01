@@ -42,7 +42,47 @@
   <script> 
     $(document).ready(function() { 
       var dataUser = $('#table_transaksi').DataTable({ 
-          serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
+        pageLength: 25,
+        processing: true,
+        serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
+        dom: '<"d-flex justify-content-between align-items-center"lBf>tipr',
+        language: {
+          buttons: {
+            colvis: 'show / hide', // label button show / hide
+            colvisRestore: "Reset Kolom" // label untuk reset kolom ke default
+          }
+        },
+        buttons: [
+          { extend: 'colvis', postfixButtons: ['colvisRestore'] },
+          {
+            extend: 'csv',
+            title: 'Tabel Transaksi',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4] // kolom yang akan di-include dalam ekspor
+            }
+          },
+          {
+            extend: 'pdf',
+            title: 'Tabel Transaksi',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4] // kolom yang akan di-include dalam ekspor
+            }
+          },
+          {
+            extend: 'excel',
+            title: 'Tabel Transaksi',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4] // kolom yang akan di-include dalam ekspor
+            }
+          },
+          {
+            extend: 'print',
+            title: 'Tabel Transaksi',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4] // kolom yang akan di-include dalam ekspor
+            }
+          },
+        ],
           ajax: { 
               "url": "{{ url('transaksi/list') }}", 
               "dataType": "json", 
@@ -76,7 +116,17 @@
               data: "penjualan_tanggal",                
               className: "", 
               orderable: false,    // orderable: true, jika ingin kolom ini bisa diurutkan 
-              searchable: false    // searchable: true, jika ingin kolom ini bisa dicari
+              searchable: false,    // searchable: true, jika ingin kolom ini bisa dicari
+              render: function(data, type, row) {
+              if (data) {
+                var date = new Date(data);
+                var year = date.getFullYear().toString();
+                var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                var day = ('0' + date.getDate()).slice(-2);
+                return day + '-' + month + '-' + year;
+              }
+              return '';
+            }, 
             },{ 
               data: "aksi",                
               className: "", 

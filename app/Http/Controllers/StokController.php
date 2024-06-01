@@ -92,6 +92,7 @@ class StokController extends Controller
 
     //UNTUK MENGHANDLE ATAU MENYIMPAN DATA BARU 
     public function store(Request $request){
+        $user_id = auth()->user()->user_id;
         $request->validate([
             //barang_kode harus diisi, berupa string, minimal 3 karakter dan bernilai unik di table m_barang kolom barang_kode
             'stok_tanggal' => 'required|date',
@@ -100,7 +101,7 @@ class StokController extends Controller
 
         StokModel::create([
             'barang_id' => $request -> barang_id,
-            'user_id' => $request -> user_id,
+            'user_id' => $user_id,
             'stok_tanggal'=> $request -> stok_tanggal,
             'stok_jumlah'=> $request -> stok_jumlah,
         ]);

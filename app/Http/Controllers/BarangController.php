@@ -69,11 +69,14 @@ class BarangController extends Controller
 
         $kategori = KategoriModel::all(); //ambil data kategori untuk ditampilkan di form
         $activeMenu = 'barang'; //set menu sedang aktif
+        $lastBarang = BarangModel::latest('barang_id')->first();
+        $lastId = $lastBarang ? $lastBarang->barang_id : 0;
 
         return view('barang.create', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'kategori' => $kategori,
+            'lastId' => $lastId,
             'activeMenu' => $activeMenu
         ]);
     }

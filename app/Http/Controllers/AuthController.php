@@ -35,8 +35,7 @@ class AuthController extends Controller
             'username' => 'required|string|min:3|unique:m_user,username',
             'nama' => 'required|string|max:100',
             'password' => 'required|min:5',
-            'level_id' => 'required|integer',
-            'foto' => 'nullable|image',
+            'foto' => 'nullable|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $user = UserModel::all();
@@ -49,11 +48,11 @@ class AuthController extends Controller
             'nama'=> $request -> nama,
             'password' => bcrypt($request -> password),
             'activate' => 0,
+            'level_id' => 0,
             'foto' => $path,
-            'level_id' => $request -> level_id,
         ]);
         
-        return back()->with('success', 'Register Successfully');
+        return back()->with('success', 'Registrasi Berhasil');
     }
 
     /**
@@ -67,13 +66,9 @@ class AuthController extends Controller
         ];
 
         if(Auth::attempt($auth)) {
-            if (auth()->user()->activate == 0) {
-                return back()->with('activate', 'Akun belum di aktivasi');
-            }
             return redirect('beranda')->with('success', 'Login Berhasil');
         }
-
-        return back()->with('error', 'Username or Password is wrong');
+        return back()->with('error', 'Username atau Password salah!');
     }
 
     /**

@@ -51,36 +51,45 @@
     $(document).ready(function() { 
       var dataBarang = $('#table_barang').DataTable({ 
         pageLength: 25,
-          processing: true,
-          serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
-          dom: '<"html5buttons">Bfrtip',
+        processing: true,
+        serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
+        dom: '<"d-flex justify-content-between align-items-center"lBf>tipr',
         language: {
-            buttons: {
-                colvis : 'show / hide', // label button show / hide colvisRestore: "Reset Kolom" //lael untuk reset kolom ke default
-            }
+          buttons: {
+            colvis: 'show / hide', // label button show / hide
+            colvisRestore: "Reset Kolom" // label untuk reset kolom ke default
+          }
         },
-        buttons : [
-            {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] },
-            {
-                extend:'csv' ,
-                title:'Tabel User',
-                // exportOptions : columns: [0,1,2,3,4]
-            },
-            {
-                extend: 'pdf', 
-                title:'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
-            },
-            {
-                extend: 'excel', 
-                title: 'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
-            },
-            {
-                extend:'print',
-                title: 'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
-            },
+        buttons: [
+          { extend: 'colvis', postfixButtons: ['colvisRestore'] },
+          {
+            extend: 'csv',
+            title: 'Tabel Barang',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5] // kolom yang akan di-include dalam ekspor
+            }
+          },
+          {
+            extend: 'pdf',
+            title: 'Tabel Barang',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5] // kolom yang akan di-include dalam ekspor
+            }
+          },
+          {
+            extend: 'excel',
+            title: 'Tabel Barang',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5] // kolom yang akan di-include dalam ekspor
+            }
+          },
+          {
+            extend: 'print',
+            title: 'Tabel Barang',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5] // kolom yang akan di-include dalam ekspor
+            }
+          },
         ],
           ajax: { 
               "url": "{{ url('barang/list') }}", 
