@@ -9,10 +9,7 @@ class Peramalan
         $forecast = [];
 
         $totalSales = count($salesData);
-        if ($totalSales < $windowSize) {
-            return $forecast;
-        }
-
+        
         for ($i = $windowSize; $i <= $totalSales; $i++) {
             $windowSales = array_slice($salesData, $i - $windowSize, $windowSize);
             $average = array_sum($windowSales) / $windowSize;
@@ -22,3 +19,4 @@ class Peramalan
         return $forecast;
     }
 }
+

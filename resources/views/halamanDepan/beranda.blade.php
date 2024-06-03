@@ -1,5 +1,3 @@
-<!-- resources/views/halamanDepan/beranda.blade.php -->
-
 @extends('layout.template')
 
 @section('content')
